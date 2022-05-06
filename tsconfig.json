@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    // 编译选项
+    "target": "es6", // 编译后的代码标准，默认为 ES3，从 ES6 开始改变叫法，ES7 == ES2016
+    "module": "es6", // 编译后的代码模块化标准， (commonjs  es6)
+    "lib": ["es2016", "dom"], // 环境    dom (浏览器环境) , 可以通过安装 @types/node   配置 node 环境，解决全局下的 console 报错问题等等
+    "outDir": "./dist" // 编译后文件的地址
+  },
+  "include": ["./Due/index.ts"] // 默认编译所有的 ts ,添加配置后值编译 src 目录下的 ts
+}
