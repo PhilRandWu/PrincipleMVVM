@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-06 17:34:25
+ * @LastEditTime: 2022-05-06 17:38:37
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -56,6 +56,10 @@ export function constructorObjectProxy(vm, data: options["data"], namespace) {
                 data[key] = value;
             }
         })
+        // 判断如果是对象套对象如何处理
+        if(data[key] instanceof Object) {
+            proxyObj[key] = constructorObjectProxy(vm,data[key],getNameSpace(namespace,key));
+        }
     }
     return proxyObj;
 }
@@ -68,3 +72,13 @@ export function constructorObjectProxy(vm, data: options["data"], namespace) {
  * @return {*}
  */
 export function constructorArrayProxy(vm, data: options["data"], namespace) {}
+
+function getNameSpace(nowNameSpace,nowProp) {
+    if(!nowNameSpace || nowNameSpace === '') {
+        return nowProp;
+    }
+    if(!nowProp || nowProp === '') {
+        return nowNameSpace;
+    }
+    return nowNameSpace + '.' + nowProp;
+}
