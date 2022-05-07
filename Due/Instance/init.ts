@@ -6,7 +6,7 @@ import { mount } from './mount';
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:28:07
- * @LastEditTime: 2022-05-07 17:13:39
+ * @LastEditTime: 2022-05-07 17:44:05
  * @LastEditors: PhilRandWu
  */
 let uid = 0;
@@ -27,7 +27,7 @@ export function init(Due) {
     if (options && options.data) {
       vm._data = constructorProxy(vm, options.data, "");
     }
-    // 3.cretaed
+    // 3.created
     console.log('created');
     // 4.初始化 el 并挂载
     if(options && options.el) {
