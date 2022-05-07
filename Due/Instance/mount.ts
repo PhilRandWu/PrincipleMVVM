@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 17:09:12
- * @LastEditTime: 2022-05-07 17:45:51
+ * @LastEditTime: 2022-05-07 18:57:35
  * @LastEditors: PhilRandWu
  */
 import Vnode from "../vdom/vnode";
@@ -33,12 +33,25 @@ function constructorVnode(vm, elm, parents) {
   let tag = elm.nodeName;
   let nodeType = elm.nodeType;
   vnode = new Vnode(tag, elm, children, text, data, parents, nodeType);
+
+  let childs = vnode.elm.childNodes;
+  for (let i = 0; i < childs.length; i++) {
+    let childNodes = constructorVnode(vm, childs[i], vnode);
+    if (childNodes instanceof Vnode) {
+      //返回单一节点
+      children.push(childNodes);
+    } else {
+      // 返回整个节点数组
+      vnode.childNode = vnode.childNode.concat(childNodes);
+    }
+  }
+
   return vnode;
 }
 
 function getElementText(dom): string {
-  if(dom.nodeType === 3) {
-      return dom.nodeValue;
+  if (dom.nodeType === 3) {
+    return dom.nodeValue;
   }
-  return '';
+  return "";
 }
