@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-06 17:38:37
+ * @LastEditTime: 2022-05-07 15:27:55
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -33,16 +33,16 @@ export function constructorProxy(vm, data: options["data"], namespace) {
  * @param {*} namespace
  * @return {*}
  */
-export function constructorObjectProxy(vm, data: options["data"], namespace) {
-    let proxyObj = null;
+export function constructorObjectProxy(vm, data: {}, namespace) {
+    let proxyObj = {};
     for (const key in data) {
         Object.defineProperty(proxyObj,key,{
             configurable:true,
             get() {
                 return data[key];
             },
-            set(value) {
-                console.log('set value',value);
+            set: function (value) {
+                console.log('set value',namespace,value);
                 data[key] = value;
             }
         })
@@ -52,9 +52,10 @@ export function constructorObjectProxy(vm, data: options["data"], namespace) {
             get() {
                 return data[key];
             },
-            set(value) {
+            set: function (value) {
+                console.log('set value',namespace,value);
                 data[key] = value;
-            }
+            },
         })
         // 判断如果是对象套对象如何处理
         if(data[key] instanceof Object) {
@@ -71,7 +72,7 @@ export function constructorObjectProxy(vm, data: options["data"], namespace) {
  * @param {*} namespace
  * @return {*}
  */
-export function constructorArrayProxy(vm, data: options["data"], namespace) {}
+export function constructorArrayProxy(vm, data: [], namespace) {}
 
 function getNameSpace(nowNameSpace,nowProp) {
     if(!nowNameSpace || nowNameSpace === '') {
