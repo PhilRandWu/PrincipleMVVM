@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-07 15:27:55
+ * @LastEditTime: 2022-05-07 15:43:16
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -42,7 +42,7 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
                 return data[key];
             },
             set: function (value) {
-                console.log('set value',namespace,value);
+                console.log('set value',getNameSpace(namespace,''));
                 data[key] = value;
             }
         })
@@ -53,7 +53,7 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
                 return data[key];
             },
             set: function (value) {
-                console.log('set value',namespace,value);
+                console.log('set value',getNameSpace(namespace,''));
                 data[key] = value;
             },
         })
@@ -72,7 +72,9 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
  * @param {*} namespace
  * @return {*}
  */
-export function constructorArrayProxy(vm, data: [], namespace) {}
+export function constructorArrayProxy(vm, data: [], namespace) {
+
+}
 
 function getNameSpace(nowNameSpace,nowProp) {
     if(!nowNameSpace || nowNameSpace === '') {
