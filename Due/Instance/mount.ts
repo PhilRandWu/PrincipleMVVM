@@ -3,11 +3,13 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 17:09:12
- * @LastEditTime: 2022-05-07 18:57:35
+ * @LastEditTime: 2022-05-07 20:24:02
  * @LastEditors: PhilRandWu
  */
 import Vnode from "../vdom/vnode";
 import Due from "./index";
+import { prepareRender, getNode2Template, getTemplate2Node } from "./render";
+
 export function initMount() {
   Due.prototype.$mount = function (el) {
     let vm = this;
@@ -23,6 +25,11 @@ export function mount(vm, rootDom) {
   // 4.2 挂载
   // 根节点无父节点
   vm._vnode = constructorVnode(vm, rootDom, null);
+  // 预渲染
+  prepareRender(vm, vm._vnode);
+  console.log(getNode2Template())
+  console.log(
+    getTemplate2Node())
 }
 
 function constructorVnode(vm, elm, parents) {
