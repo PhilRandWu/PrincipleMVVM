@@ -1,0 +1,26 @@
+{
+  "name": "principlemvvm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel ./test/test.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhilRandWu/PrincipleMVVM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhilRandWu/PrincipleMVVM/issues"
+  },
+  "homepage": "https://github.com/PhilRandWu/PrincipleMVVM#readme",
+  "dependencies": {
+    "parcel": "^2.0.0-rc.0"
+  }
+}
