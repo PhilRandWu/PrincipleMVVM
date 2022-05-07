@@ -1,11 +1,12 @@
 import { options } from "./../type/options";
 import { constructorProxy } from "./proxy";
+import { mount } from './mount';
 /*
  * @Description: 初始化 Due 构造函数
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:28:07
- * @LastEditTime: 2022-05-06 17:00:00
+ * @LastEditTime: 2022-05-07 17:13:39
  * @LastEditors: PhilRandWu
  */
 let uid = 0;
@@ -25,6 +26,13 @@ export function init(Due) {
     // 2.1 代理 data
     if (options && options.data) {
       vm._data = constructorProxy(vm, options.data, "");
+    }
+    // 3.cretaed
+    console.log('created');
+    // 4.初始化 el 并挂载
+    if(options && options.el) {
+      let roomDom = document.getElementById(options.el);
+      mount(vm,roomDom);
     }
   };
 }
