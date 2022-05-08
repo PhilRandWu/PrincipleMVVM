@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-02-14 19:57:10
- * @LastEditTime: 2022-02-14 20:24:28
+ * @LastEditTime: 2022-05-08 15:21:45
  * @LastEditors: PhilRandWu
 -->
 <!DOCTYPE html>
@@ -14,7 +14,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div id="app"></div>
-        <script src="./index.js" type="module"></script>
+        <div id="app">
+            你好{{content}} +{{obj.a}}
+            <span>hello world{{list.0.a}}</span>
+        </div>
+        <script src="./index.ts" type="module"></script>
     </body>
 </html>
