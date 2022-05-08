@@ -1,10 +1,11 @@
 import { vm } from "./../type/options";
+import { getValue } from '../utils/object';
 /*
  * @Description:
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-08 15:59:17
+ * @LastEditTime: 2022-05-08 17:30:54
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -159,34 +160,12 @@ function getTemplateValue(objs, templateName) {
 }
 
 /**
- * @description: 从一个对象中得到 key.a 的value
- * @param {*} obj
- * @param {*} templateName
- * @return {*}
- */
-function getValue(obj, templateName) {
-  // key.a
-  let nameList = templateName.split(".");
-  let temp = obj;
-  for (let i = 0; i < nameList.length; i++) {
-    // 查看 obj 下是否有 key, 有的话 temp 变为 temp[key]
-    if (temp[nameList[i]]) {
-      temp = temp[nameList[i]];
-    } else {
-      return null;
-    }
-  }
-  return temp;
-}
-
-/**
  * @description: 当数据发生更改时，实时渲染数据
  * @param {*}
  * @return {*}
  */
 export function renderData(vm, templateName) {
   let nodes = template2node.get(templateName);
-  console.log("nodes", nodes);
   if (nodes) {
     // 改变的数据名有对应的 nodes
     for (let i = 0; i < nodes.length; i++) {

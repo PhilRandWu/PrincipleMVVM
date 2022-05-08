@@ -3,12 +3,13 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 17:09:12
- * @LastEditTime: 2022-05-07 20:24:02
+ * @LastEditTime: 2022-05-08 17:15:44
  * @LastEditors: PhilRandWu
  */
 import Vnode from "../vdom/vnode";
 import Due from "./index";
 import { prepareRender, getNode2Template, getTemplate2Node } from "./render";
+import { vModel } from './grammar/vModel';
 
 export function initMount() {
   Due.prototype.$mount = function (el) {
@@ -27,12 +28,13 @@ export function mount(vm, rootDom) {
   vm._vnode = constructorVnode(vm, rootDom, null);
   // 预渲染
   prepareRender(vm, vm._vnode);
-  console.log(getNode2Template())
-  console.log(
-    getTemplate2Node())
+  console.log(getNode2Template());
+  console.log(getTemplate2Node());
 }
 
 function constructorVnode(vm, elm, parents) {
+  // 分析相应的属性,处理 v-model
+  analysisAttr(vm, elm, parents);
   let vnode = null;
   let children = [];
   let text = getElementText(elm);
@@ -61,4 +63,14 @@ function getElementText(dom): string {
     return dom.nodeValue;
   }
   return "";
+}
+
+function analysisAttr(vm, elm, parents) {
+  if(elm.nodeType === 1) {
+    // 如果当前节点为 元素节点，判断相应的属性
+    const attrArr = elm.getAttributeNames();
+    if(attrArr.includes('v-model')) {
+      vModel(vm,elm,elm.getAttribute('v-model'));
+    }
+  }
 }

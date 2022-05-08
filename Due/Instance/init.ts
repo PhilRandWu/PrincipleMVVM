@@ -6,7 +6,7 @@ import { mount } from './mount';
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:28:07
- * @LastEditTime: 2022-05-07 17:44:05
+ * @LastEditTime: 2022-05-08 17:32:15
  * @LastEditors: PhilRandWu
  */
 let uid = 0;
@@ -15,8 +15,8 @@ export function init(Due) {
   Due.prototype._init = function (options: options) {
     // 创建一些私有属性
     const vm = this;
-    this.uid = uid++;
-    this._isDue = true;
+    vm.uid = uid++;
+    vm._isDue = true;
 
     // 运行生命周期函数，配置相关属性
     // 1.beforeCreated 钩子函数
@@ -25,6 +25,7 @@ export function init(Due) {
     // 最后使用代理模式挂载到实例中
     // 2.1 代理 data
     if (options && options.data) {
+      console.log('_data',constructorProxy(vm, options.data, ""))
       vm._data = constructorProxy(vm, options.data, "");
     }
     // 3.created
