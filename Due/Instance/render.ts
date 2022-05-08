@@ -1,11 +1,11 @@
 import { vm } from "./../type/options";
-import { getValue } from '../utils/object';
+import { getValue } from "../utils/object";
 /*
  * @Description:
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-08 20:22:56
+ * @LastEditTime: 2022-05-08 20:58:17
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -26,7 +26,9 @@ export function prepareRender(vm, vnode) {
   if (vnode.nodeType === 3) {
     // 文本节点,进行分析处理
     analysisNode(vnode);
-  } else if (vnode.nodeType === 1) {
+  }
+  analysisAttr(vm, vnode);
+  if (vnode.nodeType === 1) {
     // 元素节点
     for (let i = 0; i < vnode.children.length; i++) {
       prepareRender(vm, vnode.children[i]);
@@ -129,12 +131,24 @@ function renderNode(vm: vm, vnode) {
       for (let i = 0; i < templates.length; i++) {
         // 此处的[vm._data,vm.env] 的原因时 for-in 循环子节点可能使用父节点的 key 与 index
         let templateValue = getTemplateValue([vm._data, vm.env], templates[i]);
-        console.log(templates[i],[vm._data, vm.env],templateValue)
+        console.log(templates[i], [vm._data, vm.env], templateValue);
         if (templateValue) {
           text = text.replace("{{" + templates[i] + "}}", templateValue);
         }
       }
       vnode.elm.nodeValue = text; // 改变真实 dom 下的 text
+    }
+  } else if(vnode.nodeType === 1 && vnode.tag === 'INPUT') {
+    // 元素节点
+    const templates = node2template.get(vnode);
+    if(templates) {
+      for(let i = 0; i < templates.length; i ++) {
+        const templateValue = getTemplateValue([vm._data,vm.env],templates[i]);
+        // 将 input 框的值设置为从对应的 环境下 查询以input 节点为键值的 value
+        if(templateValue) {
+          vnode.elm.value = templateValue;
+        }
+      }
     }
   } else {
     // 重新查找当前节点的子节点
@@ -173,5 +187,16 @@ export function renderData(vm, templateName) {
       // 重新渲染数据
       renderNode(vm, nodes[i]);
     }
+  }
+}
+
+function analysisAttr(vm, vnode) {
+  if (vnode.nodeType !== 1) {
+    return;
+  }
+  const attrs = vnode.elm.getAttributeNames();
+  if (attrs.includes("v-model")) {
+    setNode2Template(vnode.elm.getAttribute("v-model"), vnode);
+    setNode2Template(vnode.elm.getAttribute("v-model"), vnode);
   }
 }
