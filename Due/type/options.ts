@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:40:30
- * @LastEditTime: 2022-05-07 16:46:58
+ * @LastEditTime: 2022-05-08 15:04:18
  * @LastEditors: PhilRandWu
  */
 export interface options {
@@ -14,5 +14,6 @@ export interface options {
 
 
 export interface vm {
-    _data: {}
+    _data: {},
+    env: {}
 }

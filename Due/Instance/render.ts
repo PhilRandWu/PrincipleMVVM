@@ -1,9 +1,10 @@
+import { vm } from "./../type/options";
 /*
  * @Description:
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-07 20:29:09
+ * @LastEditTime: 2022-05-08 15:23:49
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -99,4 +100,75 @@ export function getTemplate2Node() {
 
 export function getNode2Template() {
   return node2template;
+}
+
+/**
+ * @description: 为 Due 实例提供一个 _render 的初始化函数
+ * @param {*} Due
+ * @return {*}
+ */
+export function renderMixin(Due) {
+  Due.prototype._render = function () {
+    renderNode(this, this._vnode);
+  };
+}
+
+/**
+ * @description: 渲染节点
+ * @param {*} vm
+ * @param {*} vnode
+ * @return {*}
+ */
+function renderNode(vm: vm, vnode) {
+  if (vnode.nodeType === 3) {
+    // 是一个文本节点
+    let templates = node2template.get(vnode); // 得到当前节点对应的模板
+    if (templates) {
+      let text = vnode.text;
+      for (let i = 0; i < templates.length; i++) {
+        // 此处的[vm._data,vm.env] 的原因时 for-in 循环子节点可能使用父节点的 key 与 index
+        let templateValue = getTemplateValue([vm._data, vm.env], templates[i]);
+        if (templateValue) {
+          text = text.replace("{{" + templates[i] + "}}", templateValue);
+        }
+      }
+      vnode.elm.nodeValue = text; // 改变真实 dom 下的 text
+    }
+  } else {
+    // 重新查找当前节点的子节点
+    for (let i = 0; i < vnode.children.length; i++) {
+      renderNode(vm, vnode.children[i]);
+    }
+  }
+}
+
+function getTemplateValue(objs, templateName) {
+  for (let i = 0; i < objs.length; i++) {
+    const templateValue = getValue(objs[i], templateName);
+    if (!templateValue) {
+      return null;
+    }
+    return templateValue;
+  }
+}
+
+/**
+ * @description: 从一个对象中得到 key.a 的value
+ * @param {*} obj
+ * @param {*} templateName
+ * @return {*}
+ */
+function getValue(obj, templateName) {
+  // key.a
+  let nameList = templateName.split(".");
+  let temp = obj;
+  for (let i = 0; i < nameList.length; i++) {
+    // 查看 obj 下是否有 key, 有的话 temp 变为 temp[key]
+    if (temp[nameList[i]]) {
+      temp = temp[nameList[i]];
+    } else {
+      return null;
+    }
+  }
+  return temp;
 }
