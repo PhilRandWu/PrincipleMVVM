@@ -25,7 +25,6 @@ export function init(Due) {
     // 最后使用代理模式挂载到实例中
     // 2.1 代理 data
     if (options && options.data) {
-      console.log('_data',constructorProxy(vm, options.data, ""))
       vm._data = constructorProxy(vm, options.data, "");
     }
     // 3.created

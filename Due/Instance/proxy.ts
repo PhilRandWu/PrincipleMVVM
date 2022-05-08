@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-08 20:19:14
+ * @LastEditTime: 2022-05-08 20:29:39
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -20,7 +20,7 @@ export function constructorProxy(vm, data: options["data"], namespace) {
   // console.log('isArray',data instanceof Array,Array.isArray(data))
   let proxyObj = null;
   if (data instanceof Array) {
-    // 是一个数组
+    // // 是一个数组
     proxyObj = new Array(data.length);
     for (let i = 0; i < proxyObj.length; i++) {
       // 进而判断数组的每一项使用 constructor 进行代理，防止出现深层嵌套
@@ -28,7 +28,7 @@ export function constructorProxy(vm, data: options["data"], namespace) {
     }
     // 数组的修改也需要进行代理
     proxyObj = constructorArrayProxy(vm, data, namespace);
-  } else {
+  } else if(data instanceof Object){
     // 是一个对象，使用 Ts 类型检查机制，不必判断其他类型
     proxyObj = constructorObjectProxy(vm, data, namespace);
   }
