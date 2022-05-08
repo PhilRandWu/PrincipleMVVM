@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-08 17:28:33
+ * @LastEditTime: 2022-05-08 20:19:14
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -28,13 +28,12 @@ export function constructorProxy(vm, data: options["data"], namespace) {
     }
     // 数组的修改也需要进行代理
     proxyObj = constructorArrayProxy(vm, data, namespace);
-  } else if(data instanceof Object){
+  } else {
     // 是一个对象，使用 Ts 类型检查机制，不必判断其他类型
     proxyObj = constructorObjectProxy(vm, data, namespace);
   }
   return proxyObj;
 }
-
 
 /**
  * @description: 处理代理对象
@@ -45,7 +44,7 @@ export function constructorProxy(vm, data: options["data"], namespace) {
  */
 export function constructorObjectProxy(vm, data: {}, namespace) {
   let proxyObj = {};
-  for (const key in data) {
+  for (let key in data) {
     Object.defineProperty(proxyObj, key, {
       configurable: true,
       get() {
@@ -83,7 +82,6 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
   return proxyObj;
 }
 
-
 /**
  * @description: 处理代理数组
  * @param {*} vm
@@ -120,6 +118,7 @@ export function constructorArrayProxy(vm, arr, namespace) {
  * @return {*}
  */
 function getNameSpace(nowNameSpace, nowProp) {
+  console.log(nowNameSpace, nowProp);
   if (!nowNameSpace || nowNameSpace === "") {
     return nowProp;
   }
@@ -128,6 +127,7 @@ function getNameSpace(nowNameSpace, nowProp) {
   }
   return nowNameSpace + "." + nowProp;
 }
+
 
 const arrayProto = Array.prototype;
 function proxyArrayFunction(vm, arrayObj, funcName: string, namespace) {

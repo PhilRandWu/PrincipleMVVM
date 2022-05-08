@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-08 16:19:21
- * @LastEditTime: 2022-05-08 17:01:39
+ * @LastEditTime: 2022-05-08 19:57:33
  * @LastEditors: PhilRandWu
  */
 /**
@@ -13,6 +13,9 @@
  * @return {*}
  */
 export function getValue(obj, templateName) {
+  if (!obj) {
+    return;
+  }
   // key.a
   let nameList = templateName.split(".");
   let temp = obj;
@@ -35,7 +38,9 @@ export function getValue(obj, templateName) {
  * @return {*}
  */
 export function setValue(obj, modelValue, value) {
-  console.log(obj,modelValue,value)
+  if (!obj) {
+    return;
+  }
   let temp = obj;
   let nameList = modelValue.split(".");
   // 查询直到倒数第二个判断是否有对应属性
@@ -47,7 +52,7 @@ export function setValue(obj, modelValue, value) {
     }
   }
   // 如果到最后一个则判断是否有相应的属性
-  if (temp[nameList.length - 1]) {
-    temp[nameList.length - 1] = value;
+  if (temp[nameList[nameList.length - 1]]) {
+    temp[nameList[nameList.length - 1]] = value;
   }
 }
