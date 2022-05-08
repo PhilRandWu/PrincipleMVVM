@@ -3,10 +3,11 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-07 16:22:39
+ * @LastEditTime: 2022-05-08 15:59:42
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
+import { renderData } from "./render";
 
 /**
  * @description: 处理代理
@@ -50,8 +51,10 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
         return data[key];
       },
       set: function (value) {
-        console.log("set value", getNameSpace(namespace, key));
+        // console.log("set value", getNameSpace(namespace, key));
         data[key] = value;
+        // 数据发生更改，自动渲染
+        renderData(vm, getNameSpace(namespace, key));
       },
     });
     // 进一步在 Due 上代理
@@ -61,8 +64,10 @@ export function constructorObjectProxy(vm, data: {}, namespace) {
         return data[key];
       },
       set: function (value) {
-        console.log("set value", getNameSpace(namespace, key));
+        // console.log("set value", getNameSpace(namespace, key));
         data[key] = value;
+        // 数据发生更改，自动渲染
+        renderData(vm, getNameSpace(namespace, key));
       },
     });
     // 判断如果是对象套对象 数组如何处理

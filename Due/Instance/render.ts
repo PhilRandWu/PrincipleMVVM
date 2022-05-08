@@ -4,7 +4,7 @@ import { vm } from "./../type/options";
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-08 15:23:49
+ * @LastEditTime: 2022-05-08 15:59:17
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -57,7 +57,7 @@ function setTemplate2Node(template, vnode) {
   let templateName = getTemplateName(template);
   const setTemplate = template2node.get(templateName);
   if (setTemplate) {
-    setTemplate.push(templateName);
+    setTemplate.push(vnode);
   } else {
     template2node.set(templateName, [vnode]);
   }
@@ -142,6 +142,12 @@ function renderNode(vm: vm, vnode) {
   }
 }
 
+/**
+ * @description: 从 objs 里得到 template 对应的 value
+ * @param {*} objs
+ * @param {*} templateName
+ * @return {*}
+ */
 function getTemplateValue(objs, templateName) {
   for (let i = 0; i < objs.length; i++) {
     const templateValue = getValue(objs[i], templateName);
@@ -171,4 +177,21 @@ function getValue(obj, templateName) {
     }
   }
   return temp;
+}
+
+/**
+ * @description: 当数据发生更改时，实时渲染数据
+ * @param {*}
+ * @return {*}
+ */
+export function renderData(vm, templateName) {
+  let nodes = template2node.get(templateName);
+  console.log("nodes", nodes);
+  if (nodes) {
+    // 改变的数据名有对应的 nodes
+    for (let i = 0; i < nodes.length; i++) {
+      // 重新渲染数据
+      renderNode(vm, nodes[i]);
+    }
+  }
 }

@@ -3,21 +3,25 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-02-14 19:57:10
- * @LastEditTime: 2022-05-08 15:21:45
+ * @LastEditTime: 2022-05-08 15:59:46
  * @LastEditors: PhilRandWu
 -->
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-        <div id="app">
-            你好{{content}} +{{obj.a}}
-            <span>hello world{{list.0.a}}</span>
-        </div>
-        <script src="./index.ts" type="module"></script>
-    </body>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="app">
+        你好{{content}} +{{obj.a}}<br />
+        <span>hello world{{obj.a}}</span>
+        <div>{{description}}</div>
+    </div>
+    <script src="./index.ts" type="module"></script>
+</body>
+
 </html>
