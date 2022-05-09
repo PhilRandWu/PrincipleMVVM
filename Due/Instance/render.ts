@@ -5,7 +5,7 @@ import { getValue } from "../utils/object";
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-09 19:45:50
+ * @LastEditTime: 2022-05-09 19:54:54
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -130,7 +130,10 @@ function renderNode(vm: vm, vnode) {
       let text = vnode.text;
       for (let i = 0; i < templates.length; i++) {
         // 此处的[vm._data,vm.env] 的原因时 for-in 循环子节点可能使用父节点的 key 与 index
-        let templateValue = getTemplateValue([vm._data, vnode.env], templates[i]);
+        let templateValue = getTemplateValue(
+          [vm._data, vnode.env],
+          templates[i]
+        );
         // console.log(templates[i], [vm._data, vm.env], templateValue);
         if (templateValue) {
           text = text.replace("{{" + templates[i] + "}}", templateValue);
@@ -138,15 +141,18 @@ function renderNode(vm: vm, vnode) {
       }
       vnode.elm.nodeValue = text; // 改变真实 dom 下的 text
     }
-  } else if(vnode.nodeType === 1 && vnode.tag === 'INPUT') {
+  } else if (vnode.nodeType === 1 && vnode.tag === "INPUT") {
     // 元素节点
     const templates = node2template.get(vnode);
-    if(templates) {
-      for(let i = 0; i < templates.length; i ++) {
-        console.log('env',vnode.env)
-        const templateValue = getTemplateValue([vm._data,vnode.env],templates[i]);
+    if (templates) {
+      for (let i = 0; i < templates.length; i++) {
+        // console.log('env',vnode.env)
+        const templateValue = getTemplateValue(
+          [vm._data, vnode.env],
+          templates[i]
+        );
         // 将 input 框的值设置为从对应的 环境下 查询以input 节点为键值的 value
-        if(templateValue) {
+        if (templateValue) {
           vnode.elm.value = templateValue;
         }
       }
@@ -167,14 +173,14 @@ function renderNode(vm: vm, vnode) {
  */
 function getTemplateValue(objs, templateName) {
   for (let i = 0; i < objs.length; i++) {
-    const templateValue = getValue(objs[i], templateName);
-    
-    console.log('objs',objs,templateName,templateValue)
-    if (!templateValue) {
-      return null;
+    let templateValue = getValue(objs[i], templateName);
+    // console.log("objs", objs, templateName, templateValue);
+    // 有则返回，否则继续查找
+    if (templateValue) {
+      return templateValue;
     }
-    return templateValue;
   }
+  return null;
 }
 
 /**

@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-08 16:19:21
- * @LastEditTime: 2022-05-08 19:57:33
+ * @LastEditTime: 2022-05-09 19:55:55
  * @LastEditors: PhilRandWu
  */
 /**
@@ -21,6 +21,7 @@ export function getValue(obj, templateName) {
   let temp = obj;
   for (let i = 0; i < nameList.length; i++) {
     // 查看 obj 下是否有 key, 有的话 temp 变为 temp[key]
+    // console.log('nameList',nameList,temp,temp[nameList[i]])
     if (temp[nameList[i]]) {
       temp = temp[nameList[i]];
     } else {
