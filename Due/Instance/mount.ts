@@ -3,13 +3,14 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 17:09:12
- * @LastEditTime: 2022-05-08 17:15:44
+ * @LastEditTime: 2022-05-09 17:25:22
  * @LastEditors: PhilRandWu
  */
 import Vnode from "../vdom/vnode";
 import Due from "./index";
 import { prepareRender, getNode2Template, getTemplate2Node } from "./render";
 import { vModel } from './grammar/vModel';
+import { vFor } from './grammar/vFor';
 
 export function initMount() {
   Due.prototype.$mount = function (el) {
@@ -69,8 +70,12 @@ function analysisAttr(vm, elm, parents) {
   if(elm.nodeType === 1) {
     // 如果当前节点为 元素节点，判断相应的属性
     const attrArr = elm.getAttributeNames();
+    // console.log('attrArr',attrArr,elm.getAttribute('v-for'));
     if(attrArr.includes('v-model')) {
       vModel(vm,elm,elm.getAttribute('v-model'));
+    }
+    if(attrArr.includes('v-for')) {
+      vFor(vm,elm,parents,elm.getAttribute('v-for'));
     }
   }
 }

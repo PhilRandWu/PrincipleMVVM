@@ -5,7 +5,7 @@ import { getValue } from "../utils/object";
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-07 19:25:53
- * @LastEditTime: 2022-05-08 20:58:17
+ * @LastEditTime: 2022-05-09 17:23:21
  * @LastEditors: PhilRandWu
  */
 // 分别定义 节点 到 模板 的对应关系
@@ -131,7 +131,7 @@ function renderNode(vm: vm, vnode) {
       for (let i = 0; i < templates.length; i++) {
         // 此处的[vm._data,vm.env] 的原因时 for-in 循环子节点可能使用父节点的 key 与 index
         let templateValue = getTemplateValue([vm._data, vm.env], templates[i]);
-        console.log(templates[i], [vm._data, vm.env], templateValue);
+        // console.log(templates[i], [vm._data, vm.env], templateValue);
         if (templateValue) {
           text = text.replace("{{" + templates[i] + "}}", templateValue);
         }

@@ -3,7 +3,7 @@
  * @Author: PhilRandWu
  * @Github: https://github/PhilRandWu
  * @Date: 2022-05-06 16:49:07
- * @LastEditTime: 2022-05-08 20:29:39
+ * @LastEditTime: 2022-05-09 17:23:15
  * @LastEditors: PhilRandWu
  */
 import { options } from "./../type/options";
@@ -118,7 +118,7 @@ export function constructorArrayProxy(vm, arr, namespace) {
  * @return {*}
  */
 function getNameSpace(nowNameSpace, nowProp) {
-  console.log(nowNameSpace, nowProp);
+  // console.log(nowNameSpace, nowProp);
   if (!nowNameSpace || nowNameSpace === "") {
     return nowProp;
   }
@@ -137,7 +137,7 @@ function proxyArrayFunction(vm, arrayObj, funcName: string, namespace) {
     value: function (...args) {
       // 当其访问 funcName 时，进行处理
       // 监听 改变数组的 修改， 使用 funcName 对 数组修改
-      console.log(getNameSpace(namespace, funcName));
+      // console.log(getNameSpace(namespace, funcName));
       return arrayProto[funcName].apply(this, args);
     },
   });
